@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>log watching system</title>
+</head>
+
+<body>
+    <h2> log view</h2>
+    <div id="log"></div>
+    
+    <script>
+        const logElement = document.getElementById('log');
+        const socket = new WebSocket('ws://localhost:5000');
+
+
+        // <!-- new data received -->
+        socket.addEventListener('message', (event) =>{
+            logElement.textContent = event.data;
+        });
+
+
+        // <!-- connection on  -->
+        socket.addEventListener('open', () =>{
+            console.log('Connected to server \n');
+        });
+
+
+        
+
+
+        // <!-- connection closed -->
+        socket.addEventListener('close', () =>{
+            console.log('Disconnected from server');
+        });
+
+        //  any error 
+        socket,addEventListener('error', (error) =>{
+            console.log('error', error)
+        });
+
+
+    </script>
+</body>
+
+</html>
